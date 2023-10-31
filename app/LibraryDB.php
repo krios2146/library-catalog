@@ -37,7 +37,7 @@ class LibraryDB {
             ISBN VARCHAR(30) NOT NULL UNIQUE,
             genre VARCHAR(20),
             publication_year INT NOT NULL,
-            is_available BOOLEAN NOT NULL,
+            is_available BOOLEAN NOT NULL
         );");
     }
 

@@ -1,7 +1,7 @@
 <?php include 'LibraryDB.php';
 
-$library_database = new LibraryDB();
+$library = new LibraryDB();
 
-echo 'Hello World'; 
+echo 'Hell'
 
 ?>
