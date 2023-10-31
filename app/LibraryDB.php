@@ -19,7 +19,7 @@ class LibraryDB {
         );
 
         $this->initializeDatabase();
-        $this->initializeTables();
+        $this->initializeTable();
     }
 
     private function initializeDatabase() {
@@ -29,14 +29,7 @@ class LibraryDB {
         $this->pdo->exec("USE `" . self::DB_NAME . "`");
     }
 
-    private function initializeTables() {
-        $this->pdo->exec("CREATE TABLE IF NOT EXISTS Users (
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            first_name VARCHAR(50) NOT NULL,
-            last_name VARCHAR(50) NOT NULL,
-            email VARCHAR(30) NOT NULL UNIQUE
-        );");
-
+    private function initializeTable() {
         $this->pdo->exec("CREATE TABLE IF NOT EXISTS Books (
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(100) NOT NULL,
@@ -45,8 +38,6 @@ class LibraryDB {
             genre VARCHAR(20),
             publication_year INT NOT NULL,
             is_available BOOLEAN NOT NULL,
-            user_id INT,
-            FOREIGN KEY (user_id) REFERENCES Users(id)
         );");
     }
 
