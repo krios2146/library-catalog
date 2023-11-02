@@ -23,8 +23,7 @@ $library_db = new LibraryDB();
           <th>Publication Year</th>
           <th>Availability</th>
         </tr>
-      </thead>
-      <tbody>
+      </thead><tbody>
 <?php
 $books = $library_db->get_all_books();
 
@@ -44,7 +43,8 @@ if(!empty($books)) {
     echo '<p>No books found</p>';
 }
 ?>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      </tbody>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
