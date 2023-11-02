@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php 
 include 'LibraryDB.php';
+$library_db = new LibraryDB();
 ?>
 <html lang="en">
 <head>
@@ -24,39 +25,25 @@ include 'LibraryDB.php';
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Book Title 1</td>
-          <td>Author 1</td>
-          <td>ISBN-123456</td>
-          <td>Fiction</td>
-          <td>2020</td>
-          <td>Available</td>
-          <td><a class="btn btn-primary" href="#" role="button">Edit</a></td>
-          <td><a class="btn btn-danger" href="#" role="button">Delete</a></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Book Title 2</td>
-          <td>Author 2</td>
-          <td>ISBN-789012</td>
-          <td>Non-Fiction</td>
-          <td>2019</td>
-          <td>Not Available</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Book Title 3</td>
-          <td>Author 3</td>
-          <td>ISBN-345678</td>
-          <td>Mystery</td>
-          <td>2021</td>
-          <td>Available</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<?php
+$books = $library_db->get_all_books();
 
+if(!empty($books)) {
+    foreach($books as $book) {
+        echo '<td>' . $book['id'] . '</td>';
+        echo '<td>' . $book['title'] . '</td>';
+        echo '<td>' . $book['author'] . '</td>';
+        echo '<td>' . $book['ISBN'] . '</td>';
+        echo '<td>' . $book['genre'] . '</td>';
+        echo '<td>' . $book['publication_year'] . '</td>';
+        echo '<td>' . $book['is_available'] . '</td>';
+        echo '<td><a class="btn btn-primary" href="edit_book.php/?id=' . $book['id'] . '" role="button">Edit</a></td>';
+        echo '<td><a class="btn btn-danger" href="delete_book.php/?id=' . $book['id'] . '" role="button">Delete</a></td>';
+    }
+} else {
+    echo '<p>No books found</p>';
+}
+?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
