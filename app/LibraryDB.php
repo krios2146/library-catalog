@@ -1,12 +1,12 @@
 <?php
 
 class LibraryDB {
-    
+
     private const DB_HOST = 'localhost';
     private const DB_USER = 'root';
     private const DB_PASSWORD = '';
     private const DB_NAME = 'digital-library';
-    
+
     private $pdo;
 
     public function __construct() {
@@ -41,12 +41,69 @@ class LibraryDB {
         );");
     }
 
-    public function get_all_books() {
+    public function get_all() {
         $query = "SELECT * FROM Books";
 
         $statement = $this->pdo->query($query);
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get($id) {
+        $query = "SELECT * FROM Books WHERE id = :id";
+        $statement = $this->pdo->prepare($query);
+
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function delete($id) {
+        $query = "DELETE FROM Books WHERE id = :id";
+        $statement = $this->pdo->prepare($query);
+
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
+    }
+
+    public function update($id, $title, $author, $ISBN, $genre, $publication_year, $is_available) {
+        $query = "UPDATE Books 
+            SET title = :title, 
+            author = :author, 
+            ISBN = :isbn, 
+            genre = :genre, 
+            publication_year = :year, 
+            is_available = :available 
+            WHERE id = :id";
+        $statement = $this->pdo->prepare($query);
+
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->bindParam(':title', $title, PDO::PARAM_STR);
+        $statement->bindParam(':author', $author, PDO::PARAM_STR);
+        $statement->bindParam(':isbn', $ISBN, PDO::PARAM_STR);
+        $statement->bindParam(':genre', $genre, PDO::PARAM_STR);
+        $statement->bindParam(':year', $publication_year, PDO::PARAM_INT);
+        $statement->bindParam(':available', $is_available, PDO::PARAM_BOOL);
+
+        $statement->execute();   
+    }
+
+    public function save($title, $author, $ISBN, $genre, $publication_year, $is_available) {
+        $query = "INSERT INTO Books (title, author, ISBN, genre, publication_year, is_available) 
+            VALUES (:title, :author, :isbn, :genre, :year, :available)";
+        $statement = $this->pdo->prepare($query);
+
+        $statement->bindParam(':title', $title, PDO::PARAM_STR);
+        $statement->bindParam(':author', $author, PDO::PARAM_STR);
+        $statement->bindParam(':isbn', $ISBN, PDO::PARAM_STR);
+        $statement->bindParam(':genre', $genre, PDO::PARAM_STR);
+        $statement->bindParam(':year', $publication_year, PDO::PARAM_INT);
+        $statement->bindParam(':available', $is_available, PDO::PARAM_BOOL);
+
+        $statement->execute();   
     }
 }
 
