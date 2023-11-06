@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $libraryDB->save($title, $author, $ISBN, $genre, $publication_year, $is_available);
     
-    header("Location: localhost");
+    header("Location: /");
     exit();
 }
 ?>
